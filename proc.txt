@@ -1,0 +1,33 @@
+sao l?y dc m?y file pro d?y
+ALTER proc [dbo].[_Suanguenlieu] @ten nvarchar(50),@loai bit,@gia int,@soluong int,@donvi nvarchar(50)
+as
+begin
+update dbo.NguyenLieu set LoaiTuoiKho=@loai,GiaTien=@gia,SoLuong=@soluong,TenDonVi=@donvi where TenNL=@ten
+end
+--
+ALTER proc [dbo].[_Suanguyenlieu] @ten nvarchar(50),@loai bit,@gia int,@soluong int,@donvi nvarchar(50)
+as
+begin
+update dbo.NguyenLieu set LoaiTuoiKho=@loai,GiaTien=@gia,SoLuong=@soluong,TenDonVi=@donvi where TenNL=@ten
+end
+--
+ALTER proc [dbo].[suathongtinNCC] @ten nvarchar(200),@diachi nvarchar(200),@SDT nvarchar(12)
+as
+update dbo.NhaCungCap set DiaChi=@diachi, SDT=@SDT where TenNCC=@ten
+--
+ALTER proc [dbo].[themNhaCC] @ten nvarchar(200),@diachi nvarchar(200),@SDT nvarchar(12)
+as
+insert dbo.NhaCungCap(TenNCC,DiaChi,SDT) values (@ten,@diachi,@SDT)
+--
+ALTER proc [dbo].[themnl] @ten nvarchar(30),@loai bit,@gia int,@soluog float,@donvi nvarchar(30)
+as
+begin
+insert dbo.NguyenLieu(TenNL,LoaiTuoiKho,SoLuong,Giatien,TenDonVi) values (@ten,@loai,@soluog,@gia,@donvi)
+end
+--
+ALTER proc [dbo].[Xoanhannvien] @ten nvarchar(200)
+as
+begin
+ update dbo.PhieuDatNL set MaNV=Null where MaNV in(select MaNV from dbo.NhanVien where HoTen=@ten)
+ delete dbo.NhanVien where MaNV in(select MaNV from dbo.NhanVien where HoTen=@ten)
+end
